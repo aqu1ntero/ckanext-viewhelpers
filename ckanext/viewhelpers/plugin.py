@@ -15,7 +15,11 @@ class ViewHelpers(p.SingletonPlugin):
 
 def _remove_linebreaks(string):
     '''Convert a string to be usable in JavaScript'''
-    return str(string).replace('\n', '')
+    try:
+        text = str(string).replace('\n', '')
+    except UnicodeEncodeError:
+        text = (u'%s' % string).replace('\n', '')
+    return text
 
 
 def _get_filter_values(resource):
